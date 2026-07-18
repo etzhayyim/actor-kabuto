@@ -18,7 +18,7 @@
             [kabuto.methods.kotoba :as kotoba]
             #?(:clj [clojure.java.io :as io])))
 
-#?(:clj (def ^:private here (-> *file* io/file .getAbsoluteFile .getParentFile .getParentFile)))
+#?(:clj (def ^:private here (io/file (System/getProperty "user.dir"))))
 
 (def bpmn-ns "http://www.omg.org/spec/BPMN/20100524/MODEL")
 

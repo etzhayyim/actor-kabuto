@@ -23,14 +23,23 @@
 #?(:clj
    (do
      (def ^:private here (.getParentFile (java.io.File. ^String *file*)))      ;; methods/
-     (def ^:private actor-dir (.getParentFile here))                          ;; kabuto/
-     (def ^:private root (.getParentFile (.getParentFile actor-dir)))          ;; repo root
+     (def ^:private actor-dir (java.io.File. (System/getProperty "user.dir")))                          ;; kabuto/
+     (def ^:private root actor-dir)          ;; repo root
      (def ^:private lexdir
-       (java.io.File. root "00-contracts/lexicons/com/etzhayyim/kabuto"))
+       (java.io.File. root "wire/lexicons"))
      (defn- lex [name]
        (json/parse-string (slurp (java.io.File. lexdir (str name ".json")))))
      (defn- manifest []
-       (json/parse-string (slurp (java.io.File. actor-dir "manifest.jsonld"))))))
+  (let [e (clojure.edn/read-string (slurp (java.io.File. actor-dir "manifest.edn")))
+        gm (into {} (map (fn [g] [(:gate/id g) g]) (:actor/gates e)))]
+    {"constitutionalGates" {"gates" gm}
+     "gates" gm
+     "nonGoals" (:actor/non-goals e)
+     "cells" (:actor/cells e)
+     "name" (:actor/id e)
+     "purpose" (:actor/purpose e)
+     "tier" "Tier-B"
+     "status" (some-> (:actor/status e) name)}))))
 
 ;; gather properties from a record OR a procedure input/output schema
 (defn- props-of [doc]

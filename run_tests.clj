@@ -1,0 +1,11 @@
+(require '[clojure.test :as t])
+(def suites '[kabuto.methods.test-charter-gates kabuto.methods.test-analyze
+              kabuto.methods.test-autorun kabuto.methods.test-social
+              kabuto.methods.test-ingest kabuto.methods.test-kotoba-cid
+              kabuto.methods.test-pipeline-cid kabuto.viz.test-build-bpmn-manifest
+              kabuto.viz.test-build-viz-data kabuto.murakumo-test
+              kabuto.repository-contract-test])
+(apply require suites)
+(let [{:keys [fail error] :as r} (apply t/run-tests suites)]
+  (println (select-keys r [:test :pass :fail :error]))
+  (when (pos? (+ fail error)) (System/exit 1)))

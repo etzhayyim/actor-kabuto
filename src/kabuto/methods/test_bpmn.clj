@@ -6,13 +6,13 @@
   Guards well-formed BPMN XML (start→tasks→end + BPMNDI layout), deterministic content-CID,
   XML escaping, and byte-parity with bpmn.py (a fixed example pins the exact sha256).
 
-  Run:  bb --classpath 20-actors 20-actors/kabuto/methods/test_bpmn.clj"
+  Run:  bb --classpath 20-actors ./methods/test_bpmn.clj"
   (:require [kabuto.methods.bpmn :as b]
             [clojure.string :as str]
             [clojure.test :refer [deftest is run-tests]]))
 
 (defn- proc-xml []
-  (let [[name tasks] (get b/templates :procurement)]
+  (let [[name tasks] (get b/templates ":procurement")]
     (b/build-bpmn "proc_jp_toyota_procurement" name "Toyota & Co <Ltd>" tasks)))
 
 (deftest bpmn-is-well-formed
@@ -26,7 +26,7 @@
     (is (str/ends-with? xml "</definitions>\n"))))
 
 (deftest task-and-flow-counts
-  (let [[_ tasks] (get b/templates :procurement)
+  (let [[_ tasks] (get b/templates ":procurement")
         xml (proc-xml)
         n-tasks (count (re-seq #"<task " xml))
         n-flows (count (re-seq #"<sequenceFlow " xml))]
@@ -50,9 +50,9 @@
   (is (= (b/content-cid (proc-xml)) "cid.sha256:5b6040d61705f89d5d2bb6e72daf3b19")))
 
 (deftest templates-present
-  (is (contains? b/templates :procurement))
-  (is (contains? b/templates :disclosure))
-  (is (= 4 (count (second (get b/templates :disclosure))))))
+  (is (contains? b/templates ":procurement"))
+  (is (contains? b/templates ":disclosure"))
+  (is (= 4 (count (second (get b/templates ":disclosure"))))))
 
 (when (= *file* (System/getProperty "babashka.file"))
   (let [{:keys [fail error]} (run-tests 'kabuto.methods.test-bpmn)]

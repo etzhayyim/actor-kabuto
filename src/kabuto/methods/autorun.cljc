@@ -43,8 +43,8 @@
 
 (def base-as-of 20260609)
 
-#?(:clj (def here (-> *file* io/file .getAbsoluteFile .getParentFile)))
-#?(:clj (def data (when here (io/file (.getParentFile here) "data"))))
+#?(:clj (def here (io/file (System/getProperty "user.dir"))))
+#?(:clj (def data (when here (io/file here "data"))))
 #?(:clj (def merged (when data (io/file data "companies.merged.kotoba.edn"))))
 #?(:clj (def seed (when data (io/file data "seed-public-companies.kotoba.edn"))))
 #?(:clj (def log-default (when data (io/file data "kabuto.datoms.kotoba.edn"))))

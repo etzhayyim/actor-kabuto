@@ -20,7 +20,7 @@
             [kabuto.methods.kabuto-edn :as kedn]
             #?(:clj [clojure.java.io :as io])))
 
-#?(:clj (def ^:private actor (-> *file* io/file .getAbsoluteFile .getParentFile .getParentFile)))
+#?(:clj (def ^:private actor (io/file (System/getProperty "user.dir"))))
 
 (def nsid-transact "com.etzhayyim.apps.kotoba.datomic.transact")
 (def id-keys

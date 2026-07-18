@@ -12,7 +12,7 @@
             [kabuto.methods.social :as social]))
 
 (def ^:private seed
-  (io/file (-> *file* io/file .getParentFile .getParentFile) "data" "seed-public-companies.kotoba.edn"))
+  (io/file (io/file (System/getProperty "user.dir")) "data" "seed-public-companies.kotoba.edn"))
 
 (defn- load-classified []
   (let [rows (kedn/load-edn seed)]

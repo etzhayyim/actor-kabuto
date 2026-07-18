@@ -19,7 +19,7 @@
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.analyze :as analyze]))
 
-(def actor-dir (-> *file* io/file .getParentFile .getParentFile))
+(def actor-dir (io/file (System/getProperty "user.dir")))
 (def seed (io/file actor-dir "data" "seed-public-companies.kotoba.edn"))
 
 (defn- load-all []

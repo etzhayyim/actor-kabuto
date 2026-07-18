@@ -93,7 +93,7 @@
     (is (empty? (filter #(str/starts-with? (str (get % "e")) "supply.edge:") datoms)))))
 
 (deftest test-seed-aggregate-counts
-  (let [rows (kedn/load-edn "20-actors/kabuto/data/seed-public-companies.kotoba.edn")
+  (let [rows (kedn/load-edn "data/seed-public-companies.kotoba.edn")
         {:keys [companies addresses contacts edges]} (kedn/classify rows)
         p (v/build-payload companies addresses contacts edges)
         d (v/build-datoms p)]

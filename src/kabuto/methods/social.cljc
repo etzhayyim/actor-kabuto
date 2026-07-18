@@ -103,7 +103,7 @@
      network leg is intentionally minimal here; default dry-run prints each record + AT-URI."
      [& argv]
      (let [argv (vec argv)
-           here (-> *file* io/file .getAbsoluteFile .getParentFile .getParentFile)
+           here (io/file (System/getProperty "user.dir"))
            seed (if (and (seq argv) (not (str/starts-with? (first argv) "--")))
                   (io/file (first argv))
                   (io/file here "data" "seed-public-companies.kotoba.edn"))
