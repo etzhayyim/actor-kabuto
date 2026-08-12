@@ -98,7 +98,7 @@
 ## Run
 
 ```bash
-cd 20-actors/kabuto
+cd actor-kabuto
 python3 methods/ingest.py                       # G7: bridge data/ingest/*.json + seed (offline default)
 python3 methods/analyze.py                       # → out/intel-report.md + out/supply-criticality.kotoba.edn
 python3 methods/bpmn.py                           # → out/bpmn/*.bpmn + out/processes.kotoba.edn

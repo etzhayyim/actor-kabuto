@@ -1,4 +1,4 @@
-{:did        "did:web:etzhayyim.github.io:com-etzhayyim-kabuto"
+{:did        "did:web:etzhayyim.com:actor:kabuto"
  :handle     "kabuto.etzhayyim.com"
  :ipns-key   "kabuto-actor"
  :graph-type "com.etzhayyim.kabuto.graph"

@@ -2,6 +2,13 @@
 
 **Tier-B actor · R0 design-only · ADR-2606022000**
 
+Canonical repository: `etzhayyim/actor-kabuto`.
+
+Kabuto is an observation organ of the Tamaki artificial organism, not an
+independent market, legal, sanctions, or enforcement authority. It produces
+public-record resilience findings; ingestion and publication remain behind the
+Council, operator, sourcing, and audit gates below.
+
 kabuto 兜 (named for 兜町 / Kabuto-chō, Tokyo's financial district) datafies the world's
 **public (exchange-listed) companies** — the company itself (name, ticker, exchange, LEI/ISIN,
 sector), its **registered HQ address** and **public contact**, the first-class **supply edges**
@@ -39,7 +46,7 @@ never a target-list.**
 ## Layout
 
 ```
-20-actors/kabuto/
+actor-kabuto/
 ├── manifest.jsonld                       # DID, cells, gates
 ├── README.md                             # this file
 ├── CLAUDE.md                             # agent reference
@@ -67,7 +74,7 @@ never a target-list.**
 ## Run
 
 ```bash
-cd 20-actors/kabuto
+cd actor-kabuto
 python3 methods/ingest.py                       # R1: bridge data/ingest/*.json + seed → companies.merged (offline default)
 python3 methods/analyze.py                       # → concentration report + derived datoms
 python3 methods/bpmn.py                           # → per-company BPMN 2.0 (with BPMNDI layout) + process datoms

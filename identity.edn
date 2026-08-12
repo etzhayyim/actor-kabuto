@@ -1,2 +1,2 @@
-{:repository/id "etzhayyim/com-etzhayyim-kabuto" :actor/id "kabuto"
- :canonical-path "orgs/etzhayyim/com-etzhayyim-kabuto" :canonical-format :edn}
+{:repository/id "etzhayyim/actor-kabuto" :actor/id "kabuto"
+ :canonical-path "orgs/etzhayyim/actor-kabuto" :canonical-format :edn}
