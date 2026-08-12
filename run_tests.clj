@@ -1,5 +1,5 @@
 (require '[clojure.test :as t])
-(def suites '[kabuto.methods.test-charter-gates kabuto.methods.test-analyze
+(def suites '[kabuto.methods.test-transact-headers kabuto.methods.test-charter-gates kabuto.methods.test-analyze
               kabuto.methods.test-autorun kabuto.methods.test-social
               kabuto.methods.test-ingest kabuto.methods.test-kotoba-cid
               kabuto.methods.test-pipeline-cid kabuto.viz.test-build-bpmn-manifest
