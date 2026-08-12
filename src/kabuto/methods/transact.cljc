@@ -23,6 +23,70 @@
 #?(:clj (def ^:private actor (io/file (System/getProperty "user.dir"))))
 
 (def nsid-transact "com.etzhayyim.apps.kotoba.datomic.transact")
+
+;; ── internal-trust header (ADR-2608124000) ────────────────────────────────────
+;; kotoba-server's `require_internal_trust` gate compares this header against its
+;; own KOTOBA_INTERNAL_SECRET. That variable is unset across the murakumo fleet,
+;; so the gate returns success and the header is never read — sending it TODAY is
+;; a complete no-op. That is precisely why it is safe to ship now: every caller
+;; must demonstrably send it BEFORE the server side can be armed, and arming the
+;; server first would break every caller at once.
+;;
+;; We read the SAME variable name the server and the Cloudflare gateway read, so
+;; arming the fleet later is one variable rather than one per actor. The value is
+;; only ever read from the environment — never minted, never defaulted.
+;;
+;; When it is unconfigured we OMIT the header, but never SILENTLY: a one-shot
+;; stderr warning fires on the live path, and `request-headers` /
+;; `internal-trust-status` expose the same fact as values a fleet sweep can read,
+;; instead of as a log line nobody reads.
+;; Silent omission is the shape that let an unauthenticated
+;; fleet look healthy in the first place.
+;;
+;; NOTE: this namespace has NO host allowlist -- the URL is operator-supplied.
+;; The trust header goes to whatever host the operator named, exactly as the
+;; KOTOBA_TOKEN bearer already does. Adding an allowlist is a separate change
+;; and is NOT made here.
+(def internal-trust-header "x-internal-trust")
+(def internal-trust-env "KOTOBA_INTERNAL_SECRET")
+
+#?(:clj
+   (defn internal-trust
+     "The configured internal-trust secret, or nil when unset/blank. Environment
+     only — this function never mints or defaults a value."
+     []
+     (let [v (System/getenv internal-trust-env)]
+       (when-not (str/blank? v) v))))
+
+#?(:clj (def ^:private internal-trust-warned? (atom false)))
+
+#?(:clj
+   (defn internal-trust-status
+     "`:configured` | `:unconfigured` — the machine-readable half of the warning."
+     []
+     (if (internal-trust) :configured :unconfigured)))
+
+#?(:clj
+   (defn warn-unconfigured-internal-trust!
+     "Announce ONCE per process that this push carries no internal-trust header."
+     []
+     (when (compare-and-set! internal-trust-warned? false true)
+       (binding [*out* *err*]
+         (println (str "WARN kabuto.methods.transact: " internal-trust-env " is unset — requests carry NO "
+                       internal-trust-header " header. Harmless while kotoba-server's"
+                       " require_internal_trust gate is disabled fleet-wide"
+                       " (ADR-2608124000); it becomes a hard rejection the moment"
+                       " that gate is armed."))))))
+
+(defn request-headers
+  "The full header map for a transact POST. PURE — the caller reads the
+   environment and passes both values in, so this stays deterministic in tests.
+   A blank token or blank trust means that header is omitted entirely; neither
+   is ever sent as an empty string."
+  [token trust]
+  (cond-> {"Content-Type" "application/json"}
+    (not (str/blank? token)) (assoc "Authorization" (str "Bearer " token))
+    (not (str/blank? trust)) (assoc internal-trust-header trust)))
 (def id-keys
   [":company/id" ":company.address/id" ":company.contact/id"
    ":supply.edge/id" ":company.process/id"])
@@ -87,10 +151,11 @@
                   (.setRequestMethod "POST")
                   (.setDoOutput true)
                   (.setConnectTimeout 60000)
-                  (.setReadTimeout 60000)
-                  (.setRequestProperty "Content-Type" "application/json"))
-           _ (when-let [tok (System/getenv "KOTOBA_TOKEN")]
-               (.setRequestProperty conn "Authorization" (str "Bearer " tok)))
+                  (.setReadTimeout 60000))
+           trust (internal-trust)
+           _ (when-not trust (warn-unconfigured-internal-trust!))
+           _ (doseq [[k v] (request-headers (System/getenv "KOTOBA_TOKEN") trust)]
+               (.setRequestProperty conn k v))
            _ (with-open [os (.getOutputStream conn)]
                (.write os (.getBytes ^String body "UTF-8")))
            status (try (.getResponseCode conn) (catch Exception _ -1))
