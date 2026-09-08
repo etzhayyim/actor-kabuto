@@ -16,7 +16,7 @@
   House style: pure datom/edn builders; the Python ':…' keyword strings stay strings; HTTP + file I/O
   only behind #?(:clj …). SELF-CONTAINED: requires the actor's existing kabuto-edn sibling. (The
   Python `__main__` CLI + urllib POST are preserved behind the #?(:clj) edge as -main / post.)"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
             #?(:clj [clojure.java.io :as io])))
 

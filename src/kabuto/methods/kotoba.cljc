@@ -25,7 +25,7 @@
   The tx CID reproduces Python `'b' + hashlib.sha256(json.dumps({'prev':…,'datoms':…},
   ensure_ascii=False, sort_keys=True, separators=(',',':')).encode('utf-8')).hexdigest()`
   byte-for-byte. (The Python `__main__` heartbeat printer is omitted — autorun.cljc's concern.)"
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 ;; ── sha-256 host seam ─────────────────────────────────────────────────────────
 (def ^:dynamic *sha256-hex*

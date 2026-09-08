@@ -16,7 +16,7 @@
 
   (The Python `__main__` runner is preserved behind #?(:clj …) as -main.)"
   (:require [clojure.test :refer [deftest is run-tests]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             #?(:clj [clojure.java.io :as io])
             [kabuto.methods.autorun :as autorun]
             [kabuto.methods.kotoba :as kotoba]))

@@ -8,7 +8,7 @@
 
   Run:  bb --classpath 20-actors ./methods/test_bpmn.clj"
   (:require [kabuto.methods.bpmn :as b]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.test :refer [deftest is run-tests]]))
 
 (defn- proc-xml []

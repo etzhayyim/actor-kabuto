@@ -9,7 +9,7 @@
   Ported: build_payload, _edn_scalar, build_datoms (pure-stdlib, float-light). OMITTED (IO leg, not
   ported): main() seed-read + file-writing + the _template.htm viewer render. Like sukashi, the
   Python is already a dead import — its dependency methods/kabuto_edn.py was pruned in a prior wave."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]))
 
 (defn- pyround
