@@ -32,7 +32,7 @@
             [kabuto.methods.analyze :as analyze]
             [kabuto.methods.kotoba :as kotoba]
             #?(:clj [clojure.java.io :as io])
-            #?(:clj [clojure.string :as str])))
+            #?(:clj [kotoba.lang.text :as str])))
 
 (defn canonical-order
   "Sort datoms by canonical JSON so the tx is DETERMINISTIC regardless of analyze's internal

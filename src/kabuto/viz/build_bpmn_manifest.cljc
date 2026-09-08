@@ -10,7 +10,7 @@
   side — which XML files exist + their content — injected as an xml-by-filename map). OMITTED (IO
   leg, not ported): main() reading out/processes.kotoba.edn + globbing/reading out/bpmn/*.bpmn +
   writing viz/bpmn-manifest.json."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 (def FEATURED
   ["org.corp.tw.tsmc" "org.corp.us.apple" "org.corp.jp.toyota"

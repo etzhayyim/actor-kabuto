@@ -6,7 +6,7 @@
   framing invariant: every composed post is aggregate-first, public-facts-only, and framed as
   resilience/accountability — never a target-list."
   (:require [clojure.test :refer [deftest is run-tests]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.social :as social]))
@@ -50,8 +50,8 @@
         edge-posts (vec (for [[_s kind t] (social/compose companies edges "") :when (= kind "supply-edge")] t))]
     (is (seq edge-posts))
     (doseq [t edge-posts]
-      (is (or (str/includes? (str/lower-case t) "resilience")
-              (str/includes? (str/lower-case t) "diversify"))))))
+      (is (or (str/includes? (str/lower t) "resilience")
+              (str/includes? (str/lower t) "diversify"))))))
 
 ;; def test_post_record_is_well_formed_atproto_post
 (deftest test-post-record-is-well-formed-atproto-post

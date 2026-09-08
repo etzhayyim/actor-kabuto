@@ -16,7 +16,7 @@
   House style: pure compose; the Python ':…' keyword strings stay strings; host/network I/O behind
   #?(:clj …). SELF-CONTAINED: requires the actor's existing kabuto-edn sibling; sha-256 (for the
   rkey) via the kotoba sibling's host seam. (The Python `__main__` CLI is preserved as -main.)"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.kotoba :as kotoba]
             #?(:clj [clojure.java.io :as io])))
@@ -31,7 +31,7 @@
 (defn charter-rider-clean
   "True iff `text` carries none of the Charter Rider deny phrases (case-insensitive)."
   [text]
-  (let [t (str/lower-case text)]
+  (let [t (str/lower text)]
     (not (some #(str/includes? t %) charter-deny))))
 
 (defn rkey

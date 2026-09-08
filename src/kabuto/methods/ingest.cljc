@@ -10,7 +10,7 @@
   House style: pure bridge/emit; the Python ':…' keyword strings stay strings; file I/O only behind
   #?(:clj …). SELF-CONTAINED: requires the actor's existing kabuto-edn sibling. (The Python `__main__`
   CLI is preserved as -main.)"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
             #?(:clj [clojure.java.io :as io])))
 
@@ -29,16 +29,16 @@
   (mapv
    (fn [r]
      (let [cid (or (get r "id")
-                   (str "org.corp." (str/lower-case (get r "country" "xx")) "."
-                        (str/lower-case (or (get r "ticker") (get r "lei") "unknown"))))
+                   (str "org.corp." (str/lower (get r "country" "xx")) "."
+                        (str/lower (or (get r "ticker") (get r "lei") "unknown"))))
            d {":company/id" cid
               ":company/name" (get r "name" cid)
               ":company/status" (str ":" (get r "status" "listed"))
               ":company/sourcing" ":representative"}
            d (if (get r "ticker") (assoc d ":company/ticker" (get r "ticker")) d)
-           d (if (get r "exchange") (assoc d ":company/exchange" (str ":" (str/lower-case (str (get r "exchange"))))) d)
+           d (if (get r "exchange") (assoc d ":company/exchange" (str ":" (str/lower (str (get r "exchange"))))) d)
            d (if (get r "country") (assoc d ":company/country" (get r "country")) d)
-           d (if (get r "sector") (assoc d ":company/sector" (str ":" (str/lower-case (str (get r "sector"))))) d)
+           d (if (get r "sector") (assoc d ":company/sector" (str ":" (str/lower (str (get r "sector"))))) d)
            d (if (get r "lei") (assoc d ":company/lei" (get r "lei")) d)]
        d))
    records))

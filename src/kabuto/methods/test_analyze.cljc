@@ -14,7 +14,7 @@
   test_analyze.py are ported 1:1 below, plus an explicit G2 resilience-not-target-
   list enforcement test (the constitutional gate)."
   (:require [clojure.test :refer [deftest is run-tests]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.analyze :as analyze]))
@@ -95,7 +95,7 @@
         edn (analyze/render-datoms companies a)
         forbidden ["target" "raid" "takeover" "interdict" "strike" "attack" "destroy"]]
     (doseq [w forbidden]
-      (is (not (str/includes? (str/lower-case edn) w))
+      (is (not (str/includes? (str/lower edn) w))
           (str "datoms must not carry interdiction vocab: " w)))
     ;; and every derived datom is flagged :derived (never authoritative fact)
     (is (str/includes? edn ":supply/derived true"))))

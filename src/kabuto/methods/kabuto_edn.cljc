@@ -12,7 +12,7 @@
 
   Subset: vectors [], maps {}, :keyword, \"string\", number, bool, nil.
   Stdlib only (regex tokenizer); file I/O at the #?(:clj) edge."
-  (:require [clojure.string :as str]))
+  (:require [kotoba.lang.text :as str]))
 
 ;; ── minimal EDN reader (subset) ──────────────────────────────────────────────
 ;; _TOK = re.compile(r'[\s,]+|;[^\n]*|(\[|\]|\{|\}|"(?:\\.|[^"\\])*"|[^\s,\[\]{}]+)')

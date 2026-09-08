@@ -13,7 +13,7 @@
   House style: pure XML/CID builders; the Python ':…' keyword strings stay strings; file I/O only
   behind #?(:clj …). SELF-CONTAINED: requires the actor's existing kabuto-edn sibling; sha-256 via
   the kotoba sibling's host seam. (The Python `__main__` CLI is preserved as -main.)"
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.kotoba :as kotoba]
             #?(:clj [clojure.java.io :as io])))

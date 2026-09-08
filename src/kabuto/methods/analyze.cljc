@@ -20,7 +20,7 @@
   that with BigDecimal(double).setScale(n, HALF_EVEN) → str. Insertion-ordered
   accumulators carry ::order metadata so stable sort-by ties the Python defaultdict
   iteration order byte-for-byte."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [clojure.set]
             [kabuto.methods.kabuto-edn :as kedn]))
 
