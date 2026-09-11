@@ -1,4 +1,4 @@
-#!/usr/bin/env bb
+#!/usr/bin/env kbb
 ;; Cross-process CID-determinism guard for the kabuto kotoba commit-DAG.
 (ns kabuto.methods.test-kotoba-cid
   "test_kotoba_cid.clj — kabuto content-addressing reproducibility (ADR-2605312345 / 2606022000).
@@ -11,7 +11,7 @@
   pinned assertions fail. Uses a FIXED datom vector (independent of the seed file, which a
   sibling agent may edit) so the pins are stable.
 
-  Run:  bb --classpath 20-actors ./methods/test_kotoba_cid.clj"
+  Run:  kbb --classpath 20-actors ./methods/test_kotoba_cid.clj"
   (:require [kabuto.methods.kotoba :as k]
             [clojure.java.io :as io]
             [clojure.test :refer [deftest is run-tests]]))

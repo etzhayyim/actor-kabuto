@@ -1,4 +1,4 @@
-#!/usr/bin/env bb
+#!/usr/bin/env kbb
 ;; End-to-end pipeline-determinism pin for the kabuto autonomous heartbeat.
 (ns kabuto.methods.test-pipeline-cid
   "test_pipeline_cid.clj — kabuto WHOLE-PIPELINE determinism (ADR-2605312345 / 2606022000).
@@ -14,7 +14,7 @@
   it). The fixture exercises single-source / commodity-HHI / supply-betweenness / tier-depth —
   the derived signals whose ordering determinism is the actual risk.
 
-  Run:  bb --classpath 20-actors ./methods/test_pipeline_cid.clj"
+  Run:  kbb --classpath 20-actors ./methods/test_pipeline_cid.clj"
   (:require [kabuto.methods.autorun :as autorun]
             [kabuto.methods.kabuto-edn :as e]
             [clojure.java.io :as io]
