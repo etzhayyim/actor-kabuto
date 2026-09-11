@@ -1,4 +1,4 @@
-#!/usr/bin/env bb
+#!/usr/bin/env kbb
 ;; Working Clojure test for methods/bpmn.clj (no Python test existed; new coverage).
 (ns kabuto.methods.test-bpmn
   "Tests for the kabuto 兜 BPMN 2.0 process-model emitter (methods/bpmn.clj).
@@ -6,7 +6,7 @@
   Guards well-formed BPMN XML (start→tasks→end + BPMNDI layout), deterministic content-CID,
   XML escaping, and byte-parity with bpmn.py (a fixed example pins the exact sha256).
 
-  Run:  bb --classpath 20-actors ./methods/test_bpmn.clj"
+  Run:  kbb --classpath 20-actors ./methods/test_bpmn.clj"
   (:require [kabuto.methods.bpmn :as b]
             [kotoba.lang.text :as str]
             [clojure.test :refer [deftest is run-tests]]))

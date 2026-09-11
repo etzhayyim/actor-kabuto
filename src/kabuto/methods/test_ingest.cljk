@@ -1,4 +1,4 @@
-#!/usr/bin/env bb
+#!/usr/bin/env kbb
 ;; Working Clojure test for methods/ingest.clj (no Python test existed; new coverage).
 (ns kabuto.methods.test-ingest
   "Tests for the kabuto 兜 public-company ingest bridge (methods/ingest.clj).
@@ -6,7 +6,7 @@
   Guards the bridge mapping (public record → :company/* :representative), the seed-wins dedup
   merge, and the G7 outward gate (full-universe live sources skipped without the operator gate).
 
-  Run:  bb --classpath 20-actors ./methods/test_ingest.clj"
+  Run:  kbb --classpath 20-actors ./methods/test_ingest.clj"
   (:require [kabuto.methods.ingest :as ing]
             [clojure.test :refer [deftest is run-tests]]))
 
