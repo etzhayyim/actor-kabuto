@@ -20,8 +20,8 @@
   that with BigDecimal(double).setScale(n, HALF_EVEN) → str. Insertion-ordered
   accumulators carry ::order metadata so stable sort-by ties the Python defaultdict
   iteration order byte-for-byte."
-  (:require [kotoba.lang.text :as str]
-            [clojure.set]
+  (:require [kotoba.bytes :as kbytes] [kotoba.lang.text :as str]
+            [kotoba.lang.coll]
             [kabuto.methods.kabuto-edn :as kedn]))
 
 ;; ── float formatting (Python round + str parity) ─────────────────────────────
@@ -95,7 +95,7 @@
       (bit-xor (aget v 0) (aget v 1) (aget v 2) (aget v 3)))))
 
 (defn- ^long pyhash [s]
-  (let [bs (.getBytes (str s) "UTF-8")]
+  (let [bs (kbytes/utf8-bytes (str s))]
     (if (zero? (alength bs)) 0
         (let [h (siphash13 bs)] (if (= h -1) -2 h)))))
 
@@ -540,14 +540,14 @@
       ;; ── data-coverage self-audit ──
       (let [n (max 1 (count companies))
             companies-set (set (kedn/co-keys companies))
-            with-addr (count (clojure.set/intersection
+            with-addr (count (kotoba.lang.coll/intersection
                               (set (map #(get % ":company.address/company") addresses)) companies-set))
-            with-contact (count (clojure.set/intersection
+            with-contact (count (kotoba.lang.coll/intersection
                                  (set (map #(get % ":company.contact/company") contacts)) companies-set))
             in-edges (reduce (fn [s e]
                                (conj s (get e ":supply.edge/from") (get e ":supply.edge/to")))
                              #{} edges)
-            with-edge (count (clojure.set/intersection in-edges companies-set))
+            with-edge (count (kotoba.lang.coll/intersection in-edges companies-set))
             with-cap (count (filter #(get % ":company/market-cap-busd") (kedn/co-vals companies)))
             countries (count (set (map #(get % ":company/country") (kedn/co-vals companies))))
             exch-count (reduce (fn [m c] (omap-update m (get c ":company/exchange" ":?") inc 0))

@@ -19,7 +19,7 @@
   (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.kotoba :as kotoba]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 (def actor-did "did:web:etzhayyim.com:actor:kabuto")
 
