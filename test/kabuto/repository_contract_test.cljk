@@ -1,6 +1,6 @@
 (ns kabuto.repository-contract-test
   (:require [clojure.edn :as edn] [kotoba.io :as io]
-            [clojure.test :refer [deftest is]]))
+            [kotoba.test :refer [deftest is]]))
 (deftest repository-boundary
   (let [c (edn/read-string (slurp "repository-contracts.edn"))
         names ["publishIntelReport" "publishSupplyChainViz" "registerCompany"

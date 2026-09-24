@@ -9,7 +9,7 @@
   Run:  kbb --classpath 20-actors ./methods/test_bpmn.clj"
   (:require [kabuto.methods.bpmn :as b]
             [kotoba.lang.text :as str]
-            [clojure.test :refer [deftest is run-tests]]))
+            [kotoba.test :refer [deftest is run-tests]]))
 
 (defn- proc-xml []
   (let [[name tasks] (get b/templates ":procurement")]

@@ -15,7 +15,7 @@
     - it does NO external I/O (offline ingest, local persist — G7/G11 stay gated).
 
   (The Python `__main__` runner is preserved behind #?(:clj …) as -main.)"
-  (:require [clojure.test :refer [deftest is run-tests]]
+  (:require [kotoba.test :refer [deftest is run-tests]]
             [kotoba.lang.text :as str]
             #?(:clj [clojure.java.io :as io])
             [kabuto.methods.autorun :as autorun]

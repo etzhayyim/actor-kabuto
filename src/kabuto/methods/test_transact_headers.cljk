@@ -13,7 +13,7 @@
   NOTE: kabuto has NO host allowlist, so there is no allowlist positive control
   to assert here. The KOTOBA_TOKEN bearer is the only pre-existing header and it
   IS asserted. Secret values below are obviously synthetic."
-  (:require [clojure.test :refer [deftest is run-tests]]
+  (:require [kotoba.test :refer [deftest is run-tests]]
             [kabuto.methods.transact :as transact]))
 
 (def ^:private synthetic-trust "synthetic-internal-trust-not-a-real-secret")

@@ -8,7 +8,7 @@
 
   Run:  kbb --classpath 20-actors ./methods/test_ingest.clj"
   (:require [kabuto.methods.ingest :as ing]
-            [clojure.test :refer [deftest is run-tests]]))
+            [kotoba.test :refer [deftest is run-tests]]))
 
 ;; String-keyed input records (this ns's house convention — bridge-public-json reads
 ;; string keys like a parsed JSON dict, NOT Clojure keywords).

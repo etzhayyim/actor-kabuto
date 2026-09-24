@@ -13,7 +13,7 @@
   matching the rasen/inochi precedent. All eight PURE analyze assertions from
   test_analyze.py are ported 1:1 below, plus an explicit G2 resilience-not-target-
   list enforcement test (the constitutional gate)."
-  (:require [clojure.test :refer [deftest is run-tests]]
+  (:require [kotoba.test :refer [deftest is run-tests]]
             [kotoba.lang.text :as str]
             [clojure.java.io :as io]
             [kabuto.methods.kabuto-edn :as kedn]

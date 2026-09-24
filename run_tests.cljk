@@ -1,4 +1,4 @@
-(require '[clojure.test :as t])
+(require '[kotoba.test :as t])
 (def suites '[kabuto.methods.test-transact-headers kabuto.methods.test-charter-gates kabuto.methods.test-analyze
               kabuto.methods.test-autorun kabuto.methods.test-social
               kabuto.methods.test-ingest kabuto.methods.test-kotoba-cid
