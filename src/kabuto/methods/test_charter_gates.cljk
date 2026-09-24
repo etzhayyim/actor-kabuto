@@ -17,7 +17,7 @@
   Reads manifest + central lexicons via cheshire (string keys). Properties are gathered from a
   record OR an XRPC procedure input/output schema. It weakens no gate; it asserts them.
   No-server-key + Murakumo-only (G6) + outward-gating (G7/G11) are manifest-level and untouched."
-  (:require [clojure.test :refer [deftest is run-tests]]
+  (:require [kotoba.test :refer [deftest is run-tests]]
             [cheshire.core :as json]))
 
 #?(:clj

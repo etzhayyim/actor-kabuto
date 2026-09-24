@@ -19,7 +19,7 @@
             [kabuto.methods.kabuto-edn :as e]
             [clojure.java.io :as io]
             [kotoba.lang.text :as str]
-            [clojure.test :refer [deftest is run-tests]]))
+            [kotoba.test :refer [deftest is run-tests]]))
 
 ;; A fixed 3-company / 2-edge supply graph (one top-level EDN vector — load-edn reads one form).
 (def ^:private fixture

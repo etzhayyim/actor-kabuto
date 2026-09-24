@@ -4,7 +4,7 @@
   slug, and the FEATURED-assembly: only featured companies inlined, procs whose XML file is absent
   skipped (the path.exists guard, injected via xml-by-filename), total counts ALL procs while
   featuredCount counts only inlined, and the manifest envelope fields."
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kabuto.viz.build-bpmn-manifest :as m]))
 
 (def ^:private sample-text

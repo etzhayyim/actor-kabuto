@@ -5,7 +5,7 @@
   strip, name-defaults-to-id; edn-scalar is unit-tested across its value kinds; build-datoms is
   checked for keyword-passthrough / int / float / quoted-string encodings + the from/to edge skip;
   and a seed run pins aggregate counts against the trusted kabuto-edn classify."
-  (:require [clojure.test :refer [deftest is]]
+  (:require [kotoba.test :refer [deftest is]]
             [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.viz.build-viz-data :as v]))
