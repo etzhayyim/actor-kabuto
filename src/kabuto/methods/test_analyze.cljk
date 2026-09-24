@@ -15,7 +15,7 @@
   list enforcement test (the constitutional gate)."
   (:require [kotoba.test :refer [deftest is run-tests]]
             [kotoba.lang.text :as str]
-            [clojure.java.io :as io]
+            [kotoba.io :as io]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.analyze :as analyze]))
 
