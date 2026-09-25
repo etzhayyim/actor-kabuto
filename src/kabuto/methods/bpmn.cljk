@@ -16,7 +16,7 @@
   (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.kotoba :as kotoba]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 #?(:clj (def ^:private here (io/file (System/getProperty "user.dir"))))
 
@@ -138,7 +138,7 @@
                                      (get p ":company.process/kind" ":procurement")])
                             processes)
                        (map (fn [cid] [cid ":procurement"]) (kedn/co-keys companies))))]
-       (.mkdirs bpmndir)
+       (io/mkdirs bpmndir)
        (let [emitted
              (vec (for [[cid kind] want]
                     (let [[name tasks] (get templates kind (get templates ":procurement"))

@@ -31,7 +31,7 @@
   (:require [kabuto.methods.kabuto-edn :as kedn]
             [kabuto.methods.analyze :as analyze]
             [kabuto.methods.kotoba :as kotoba]
-            #?(:clj [clojure.java.io :as io])
+            #?(:clj [kotoba.io :as io])
             #?(:clj [kotoba.lang.text :as str])))
 
 (defn canonical-order
@@ -55,7 +55,7 @@
      [graph-path]
      (cond
        graph-path graph-path
-       (and merged (.exists merged)) merged
+       (and merged (io/exists? merged)) merged
        :else seed)))
 
 #?(:clj
@@ -109,7 +109,7 @@
            cycles (let [v (arg-after "--cycles" nil)] (if v (Long/parseLong v) 3))
            graph-path* (let [g (arg-after "--graph" nil)] (when g (io/file g)))
            log-path (io/file (arg-after "--log" (str log-default)))]
-       (when (and (some #{"--fresh"} argv) (.exists log-path)) (.delete log-path))
+       (when (and (some #{"--fresh"} argv) (io/exists? log-path)) (io/delete log-path))
        (let [res (run-autonomous cycles graph-path* log-path)]
          (println (str "# kabuto — AUTONOMOUS public-company supply-chain resilience over the kotoba "
                        "Datom log (offline ingest, LOCAL persist; live GLEIF/EDGAR universe / "

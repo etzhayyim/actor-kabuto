@@ -12,7 +12,7 @@
   CLI is preserved as -main.)"
   (:require [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 #?(:clj (def ^:private here (io/file (System/getProperty "user.dir"))))
 
@@ -106,7 +106,7 @@
            {:keys [companies]} (kedn/classify seed-rows)
            extra (merge-bridged companies bridged)
            seed-text (str/trimr (slurp seed))]
-       (when-let [parent (.getParentFile outp)] (.mkdirs parent))
+       (when-let [parent (io/parent-file outp)] (io/mkdirs parent))
        (if (seq extra)
          (let [body (str/trimr (subs seed-text 0 (str/last-index-of seed-text "]")))]
            (spit outp (str body "\n"
