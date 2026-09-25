@@ -16,9 +16,9 @@
   House style: pure datom/edn builders; the Python ':…' keyword strings stay strings; HTTP + file I/O
   only behind #?(:clj …). SELF-CONTAINED: requires the actor's existing kabuto-edn sibling. (The
   Python `__main__` CLI + urllib POST are preserved behind the #?(:clj) edge as -main / post.)"
-  (:require [kotoba.lang.text :as str]
+  (:require [kotoba.bytes :as kbytes] [kotoba.lang.text :as str]
             [kabuto.methods.kabuto-edn :as kedn]
-            #?(:clj [clojure.java.io :as io])))
+            #?(:clj [kotoba.io :as io])))
 
 #?(:clj (def ^:private actor (io/file (System/getProperty "user.dir"))))
 
@@ -157,7 +157,7 @@
            _ (doseq [[k v] (request-headers (System/getenv "KOTOBA_TOKEN") trust)]
                (.setRequestProperty conn k v))
            _ (with-open [os (.getOutputStream conn)]
-               (.write os (.getBytes ^String body "UTF-8")))
+               (.write os (kbytes/utf8-bytes ^String body)))
            status (try (.getResponseCode conn) (catch Exception _ -1))
            stream (try (.getInputStream conn) (catch Exception _ (.getErrorStream conn)))
            txt (if stream (slurp stream) "")]
@@ -169,7 +169,7 @@
      File I/O + HTTP at the edge."
      [& argv]
      (let [argv (vec argv)
-           schema-path (io/file (.getParentFile (.getParentFile actor)) "00-contracts" "schemas"
+           schema-path (io/file (io/parent-file (io/parent-file actor)) "00-contracts" "schemas"
                                 "public-company-ontology.kotoba.edn")
            graph (let [i (.indexOf argv "--graph")]
                    (if (>= i 0) (nth argv (inc i)) (System/getenv "KABUTO_GRAPH_CID")))
@@ -177,7 +177,7 @@
                    (if (>= i 0) (nth argv (inc i)) (System/getenv "KOTOBA_CACAO_B64")))
            url (or (System/getenv "KOTOBA_URL") "http://127.0.0.1:8077")
            merged0 (io/file actor "data" "companies.merged.kotoba.edn")
-           merged (if (.exists merged0) merged0 (io/file actor "data" "seed-public-companies.kotoba.edn"))
+           merged (if (io/exists? merged0) merged0 (io/file actor "data" "seed-public-companies.kotoba.edn"))
            schema (schema-datoms (kedn/load-edn schema-path))
            data (rows-to-datoms (kedn/load-edn merged))
            batches (let [b (vec (partition-all batch data))] (if (seq b) b [[]]))]
